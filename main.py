@@ -30,21 +30,20 @@ def chat(req: ChatRequest):
         },
         timeout=30
     )
-    # 🔍 If HF returns non-JSON, don't crash
+
     try:
         data = r.json()
     except ValueError:
-        return {
-            "reply": f"Hugging Face returned non-JSON response (status {r.status_code})"
-        }
+        return {"reply": f"Non-JSON response: {r.text}"}
 
-    # Handle HF error responses
-    if isinstance(data, dict) and "error" in data:
+    if "error" in data:
         return {"reply": f"HF Error: {data['error']}"}
 
-    # Handle normal generation
-    if isinstance(data, list) and len(data) > 0:
-        if "generated_text" in data[0]:
-            return {"reply": data[0]["generated_text"]}
-
-    return {"reply": "No response from model."}
+    try:
+        return {
+            "reply": data["choices"][0]["message"]["content"]
+        }
+    except (KeyError, IndexError):
+        return {
+            "reply": f"Unexpected response format: {data}"
+        }
