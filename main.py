@@ -16,15 +16,20 @@ class ChatRequest(BaseModel):
 @app.post("/chat")
 def chat(req: ChatRequest):
     r = requests.post(
-        "https://router.huggingface.co/models/mistralai/Mistral-7B-Instruct",
+        "https://router.huggingface.co/v1/chat/completions",
         headers={
             "Authorization": f"Bearer {HF_API_KEY}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
-        json={"inputs": req.message},
+        json={
+            "model": "mistralai/Mistral-7B-Instruct-v0.3",
+            "messages": [
+                {"role": "user", "content": req.message}
+            ],
+            "temperature": 0.7
+        },
         timeout=30
     )
-
     # 🔍 If HF returns non-JSON, don't crash
     try:
         data = r.json()
