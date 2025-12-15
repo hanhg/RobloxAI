@@ -22,7 +22,7 @@ def chat(req: ChatRequest):
             "Content-Type": "application/json",
         },
         json={
-            "model": "mistralai/Mistral-7B-Instruct-v0.3",
+            "model": "meta-llama/Llama-3.1-8B-Instruct",
             "messages": [
                 {"role": "user", "content": req.message}
             ],
