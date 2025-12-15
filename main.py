@@ -1,3 +1,18 @@
+import requests
+import os
+from fastapi import FastAPI
+from pydantic import BaseModel
+from dotenv import load_dotenv
+
+load_dotenv()
+
+app = FastAPI()
+
+HF_API_KEY = os.getenv("HF_API_KEY")
+
+class ChatRequest(BaseModel):
+    message: str
+
 @app.post("/chat")
 def chat(req: ChatRequest):
     r = requests.post(
