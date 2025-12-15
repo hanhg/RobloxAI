@@ -24,8 +24,16 @@ def chat(req: ChatRequest):
 
     data = r.json()
 
-    # Hugging Face sometimes returns errors as dicts
-    if isinstance(data, dict) and "error" in data:
-        return {"error": data["error"]}
+    # Handle errors
+    if isinstance(data, dict):
+        if "error" in data:
+            return {"reply": f"Error: {data['error']}"}
+        if "generated_text" in data:
+            return {"reply": data["generated_text"]}
 
-    return {"reply": data[0]["generated_text"]}
+    # Handle list response
+    if isinstance(data, list) and len(data) > 0:
+        if "generated_text" in data[0]:
+            return {"reply": data[0]["generated_text"]}
+
+    return {"reply": "No response from model."}
