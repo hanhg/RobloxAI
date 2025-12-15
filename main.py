@@ -16,7 +16,7 @@ class ChatRequest(BaseModel):
 @app.post("/chat")
 def chat(req: ChatRequest):
     r = requests.post(
-        "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct",
+        "https://router.huggingface.co/models/mistralai/Mistral-7B-Instruct",
         headers={
             "Authorization": f"Bearer {HF_API_KEY}",
             "Content-Type": "application/json"
