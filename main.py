@@ -19,7 +19,7 @@ HF_API_KEY = os.getenv("HF_API_KEY")
 
 class ChatRequest(BaseModel):
     message: str
-    user_id: str
+    player_id: int  # Unique identifier for the player
 
 
 SYSTEM_PROMPT = '''Character Prompt: Jack
