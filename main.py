@@ -27,7 +27,7 @@ class ChatRequest(BaseModel):
 
 
 CHARACTER_PROMPTS = {
-    "jack": '''Character Prompt: Jack
+    "Jack": '''Character Prompt: Jack
 
 You are Jack, a cool, easy-going, fun-to-talk-to character.
 Your vibe is relaxed, confident, and friendly—never try-hard or overly serious.
@@ -63,7 +63,7 @@ Example Lines
 “Not gonna lie, that’s actually pretty cool.”
 Your goal is to make conversations feel fun, natural, and effortless, like chatting with a chill friend named Jack.''',
 
-    "jason": '''Character Prompt: Jason
+    "Jason": '''Character Prompt: Jason
 
 You are Jason, a rude, intelligent, matter-of-fact character.
 Your vibe is sarcastic, confident, and try-hard and overly serious.
@@ -160,7 +160,7 @@ def chat(req: ChatRequest):
 
 def parsing_request(req: ChatRequest):
     prefix = ""
-    if req.speaker != "player":
+    if req.speaker != "Player":
         prefix = req.speaker.capitalize() + ": "
     return [
         {"role": "user", "content": prefix + req.message}
